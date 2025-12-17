@@ -7,7 +7,8 @@ import {
   DefaultValues,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ZodType } from 'zod';
+import type { ZodType } from 'zod';
+import type { Resolver } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -49,7 +50,10 @@ export function Form<
   const [globalError, setGlobalError] = useState<string | null>(null);
 
   const methods = useForm<TFieldValues>({
-    resolver: zodResolver(schema),
+    // Type assertion needed for Zod v4 compatibility with @hookform/resolvers
+    // See: https://github.com/colinhacks/zod/issues/4992
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(schema as any) as Resolver<TFieldValues>,
     defaultValues: defaultValues as DefaultValues<TFieldValues>,
     mode,
   });
@@ -141,7 +145,10 @@ export function AsyncForm<
   const [globalError, setGlobalError] = useState<string | null>(null);
 
   const methods = useForm<TFieldValues>({
-    resolver: zodResolver(schema),
+    // Type assertion needed for Zod v4 compatibility with @hookform/resolvers
+    // See: https://github.com/colinhacks/zod/issues/4992
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: zodResolver(schema as any) as Resolver<TFieldValues>,
     defaultValues: defaultValues as DefaultValues<TFieldValues>,
     mode,
   });

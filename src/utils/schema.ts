@@ -1,17 +1,32 @@
-import { ZodType, ZodObject, ZodArray, ZodEffects, ZodOptional, ZodNullable, ZodDefault } from 'zod';
+import { ZodType, ZodObject, ZodArray, ZodOptional, ZodNullable, ZodDefault } from 'zod';
 import type { FieldMeta } from '../types';
 
-// Helper to safely access zod internals
+// Helper to safely access zod internals (works with both v3 and v4)
+// In v4, internals are at ._zod.def, but compat layer maintains ._def
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ZodDef = any;
+
+/**
+ * Get the internal def from a Zod schema (supports v3 and v4)
+ */
+function getZodDef(schema: ZodType): ZodDef | null {
+  if (!schema) return null;
+
+  // Try v4 structure first (._zod.def)
+  const v4Def = (schema as ZodDef)?._zod?.def;
+  if (v4Def) return v4Def;
+
+  // Fall back to v3 structure (._def)
+  return (schema as ZodDef)?._def ?? null;
+}
 
 /**
  * Check if a Zod schema represents an optional field
  */
 export function isSchemaOptional(schema: ZodType): boolean {
-  if (!schema || !(schema as ZodDef)._def) return false;
+  const def = getZodDef(schema);
+  if (!def) return false;
 
-  const def = (schema as ZodDef)._def as ZodDef;
   const typeName = def.typeName as string | undefined;
 
   // Directly optional types
@@ -19,19 +34,25 @@ export function isSchemaOptional(schema: ZodType): boolean {
     return true;
   }
 
-  // Unwrap ZodEffects (.refine, .transform, etc.)
+  // Unwrap ZodEffects (.refine, .transform, etc.) - for v3 compatibility
   if (typeName === 'ZodEffects') {
-    const effects = schema as ZodEffects<ZodType>;
-    return isSchemaOptional(effects._def.schema);
+    const innerSchema = def.schema;
+    if (innerSchema) return isSchemaOptional(innerSchema);
+  }
+
+  // Handle ZodPipe (v4's transform replacement)
+  if (typeName === 'ZodPipe') {
+    const innerSchema = def.in;
+    if (innerSchema) return isSchemaOptional(innerSchema);
   }
 
   // Check ZodUnion for optional (union with undefined)
   if (typeName === 'ZodUnion') {
     const options = def.options as ZodType[];
-    return options.some((opt: ZodType) => {
-      const optDef = (opt as ZodDef)._def;
+    return options?.some((opt: ZodType) => {
+      const optDef = getZodDef(opt);
       return optDef?.typeName === 'ZodUndefined' || optDef?.typeName === 'ZodNull';
-    });
+    }) ?? false;
   }
 
   return false;
@@ -41,25 +62,33 @@ export function isSchemaOptional(schema: ZodType): boolean {
  * Unwrap a schema to get the inner type (removes Optional, Nullable, Default, Effects)
  */
 export function unwrapSchema(schema: ZodType): ZodType {
-  if (!schema || !(schema as ZodDef)._def) return schema;
+  const def = getZodDef(schema);
+  if (!def) return schema;
 
-  const def = (schema as ZodDef)._def;
   const typeName = def.typeName as string | undefined;
 
   if (typeName === 'ZodOptional') {
-    return unwrapSchema((schema as ZodOptional<ZodType>)._def.innerType);
+    return unwrapSchema((schema as ZodOptional<ZodType>)._def?.innerType ?? def.innerType);
   }
 
   if (typeName === 'ZodNullable') {
-    return unwrapSchema((schema as ZodNullable<ZodType>)._def.innerType);
+    return unwrapSchema((schema as ZodNullable<ZodType>)._def?.innerType ?? def.innerType);
   }
 
   if (typeName === 'ZodDefault') {
-    return unwrapSchema((schema as ZodDefault<ZodType>)._def.innerType);
+    return unwrapSchema((schema as ZodDefault<ZodType>)._def?.innerType ?? def.innerType);
   }
 
+  // Handle ZodEffects (v3) - .refine, .transform
   if (typeName === 'ZodEffects') {
-    return unwrapSchema((schema as ZodEffects<ZodType>)._def.schema);
+    const innerSchema = def.schema;
+    if (innerSchema) return unwrapSchema(innerSchema);
+  }
+
+  // Handle ZodPipe (v4's transform)
+  if (typeName === 'ZodPipe') {
+    const innerSchema = def.in;
+    if (innerSchema) return unwrapSchema(innerSchema);
   }
 
   return schema;
@@ -79,24 +108,28 @@ export function getSchemaAtPath(schema: ZodType, path: string): ZodType | null {
   for (const part of parts) {
     current = unwrapSchema(current);
 
-    if (!current || !(current as ZodDef)._def) return null;
+    const def = getZodDef(current);
+    if (!def) return null;
 
-    const def = (current as ZodDef)._def;
     const typeName = def.typeName as string | undefined;
 
     // Handle array index (e.g., "0", "1")
     if (/^\d+$/.test(part)) {
       if (typeName === 'ZodArray') {
-        current = (current as ZodArray<ZodType>)._def.type;
-        continue;
+        // Get array element type - works with both v3 and v4
+        const elementType = (current as ZodArray<ZodType>)._def?.type ?? def.type ?? def.element;
+        if (elementType && typeof elementType === 'object') {
+          current = elementType as unknown as ZodType;
+          continue;
+        }
       }
       return null;
     }
 
     // Handle object property
     if (typeName === 'ZodObject') {
-      const shape = (current as ZodObject<Record<string, ZodType>>).shape;
-      if (!(part in shape)) return null;
+      const shape = (current as ZodObject<Record<string, ZodType>>).shape ?? def.shape?.();
+      if (!shape || !(part in shape)) return null;
       current = shape[part];
       continue;
     }
@@ -122,9 +155,9 @@ export function extractFieldMeta(schema: ZodType | null): FieldMeta {
 
   // Unwrap to get the inner schema
   const unwrapped = unwrapSchema(schema);
-  if (!unwrapped || !(unwrapped as ZodDef)._def) return meta;
+  const def = getZodDef(unwrapped);
+  if (!def) return meta;
 
-  const def = (unwrapped as ZodDef)._def;
   const typeName = def.typeName as string | undefined;
 
   // Extract description

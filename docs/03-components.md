@@ -77,7 +77,7 @@ import { z } from 'zod';
 
 const schema = z.object({
   name: z.string().min(1, 'Required'),
-  email: z.string().email(),
+  email: z.email(),
 });
 
 <Form
@@ -456,6 +456,34 @@ File upload input.
   maxSize={5 * 1024 * 1024} // 5MB
 />
 ```
+
+### RHFMaskedField
+
+Masked text input using react-imask.
+
+```tsx
+<RHFMaskedField
+  name="phone"
+  label="Phone Number"
+  mask="(000) 000-0000"
+  placeholder="(___) ___-____"
+/>
+```
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `name` | `string` | Field name (required) |
+| `mask` | `string` | Mask pattern (required) |
+| `definitions` | `Record<string, RegExp>` | Custom mask definitions |
+| `lazy` | `boolean` | Show mask on focus (default: true) |
+| `placeholderChar` | `string` | Placeholder character (default: '_') |
+| `unmask` | `boolean \| 'typed'` | Store unmasked value (default: true) |
+
+**Mask patterns:**
+- `0` - any digit
+- `a` - any letter
+- `*` - any character
+- Custom patterns via `definitions` prop
 
 ---
 

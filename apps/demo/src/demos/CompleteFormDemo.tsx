@@ -38,7 +38,7 @@ const memberSchema = z.object({
   gender: z.string().min(1, 'Gender is required'),
 
   // Contact Details
-  email: z.string().email('Invalid email'),
+  email: z.email({ error: 'Invalid email' }),
   mobile: z.string().length(10, 'Mobile must be 10 digits'),
   address: z.string().min(10, 'Address is required'),
   pincode: z.string().length(6, 'Pincode must be 6 digits'),

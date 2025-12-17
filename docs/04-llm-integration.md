@@ -94,7 +94,30 @@ import dayjs from 'dayjs';
 />
 ```
 
-### Pattern 8: Field Array (Dynamic Fields)
+### Pattern 8: Masked Input (requires react-imask)
+```tsx
+<RHFMaskedField
+  name="phone"
+  label="Phone"
+  mask="(000) 000-0000"
+  placeholder="(___) ___-____"
+/>
+
+<RHFMaskedField
+  name="creditCard"
+  label="Credit Card"
+  mask="0000 0000 0000 0000"
+/>
+
+<RHFMaskedField
+  name="code"
+  label="Product Code"
+  mask="AAA-0000"
+  definitions={{ A: /[A-Z]/ }}
+/>
+```
+
+### Pattern 9: Field Array (Dynamic Fields)
 ```tsx
 <RHFFieldArray
   name="items"
@@ -120,8 +143,8 @@ import dayjs from 'dayjs';
 ```tsx
 z.string()                           // Optional string
 z.string().min(1, 'Required')        // Required string
-z.string().email('Invalid email')    // Email validation
-z.string().url('Invalid URL')        // URL validation
+z.email({ error: 'Invalid email' })  // Email validation (Zod v4)
+z.url({ error: 'Invalid URL' })      // URL validation (Zod v4)
 z.string().regex(/pattern/, 'msg')   // Regex validation
 ```
 
@@ -168,7 +191,7 @@ import { Button, Stack } from '@mui/material';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email'),
+  email: z.email({ error: 'Invalid email' }),
   role: z.string().min(1, 'Select a role'),
   birthDate: z.any().refine(v => v !== null, 'Birth date required'),
   acceptTerms: z.boolean().refine(v => v === true, 'Must accept terms'),
@@ -237,6 +260,7 @@ function UserForm() {
 | `RHFFieldArray` | Dynamic list | `name`, `render` |
 | `RHFSlider` | Range slider | `name`, `label`, `min`, `max` |
 | `RHFRating` | Star rating | `name`, `label`, `max` |
+| `RHFMaskedField` | Masked input | `name`, `label`, `mask`, `placeholder` |
 
 ---
 

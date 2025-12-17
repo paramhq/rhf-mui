@@ -31,7 +31,7 @@ import { z } from 'zod';
 
 const schema = z.object({
   name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Invalid email'),
+  email: z.email({ error: 'Invalid email' }),
   role: z.string().min(1, 'Select a role'),
 });
 
@@ -64,50 +64,13 @@ function MyForm() {
 
 ## Available Components
 
-```mermaid
-flowchart LR
-    subgraph Text["Text Input"]
-        TF["TextField"]
-        NF["NumberField"]
-        PF["PasswordField"]
-        TA["TextArea"]
-    end
-    
-    subgraph Selection["Selection"]
-        SEL["Select"]
-        RG["RadioGroup"]
-        CB["Checkbox"]
-        SW["Switch"]
-    end
-    
-    subgraph Auto["Autocomplete"]
-        AC["Autocomplete"]
-        MAC["MultiAutocomplete"]
-        AAC["AsyncAutocomplete"]
-    end
-    
-    subgraph DT["Date/Time"]
-        DP["DatePicker"]
-        TP["TimePicker"]
-        DTP["DateTimePicker"]
-    end
-    
-    subgraph India["India Fields"]
-        AMT["AmountField"]
-        AAD["AadhaarField"]
-        PAN["PanField"]
-        IFSC["IfscField"]
-        PIN["PincodeField"]
-    end
-```
-
 | Category | Components |
 |----------|------------|
 | **Text Input** | `RHFTextField`, `RHFNumberField`, `RHFPasswordField`, `RHFTextArea` |
 | **Selection** | `RHFSelect`, `RHFRadioGroup`, `RHFCheckbox`, `RHFCheckboxGroup`, `RHFSwitch` |
 | **Autocomplete** | `RHFAutocomplete`, `RHFMultiAutocomplete`, `RHFAsyncAutocomplete`, `RHFCreatableAutocomplete` |
 | **Date/Time** | `RHFDatePicker`, `RHFTimePicker`, `RHFDateTimePicker` |
-| **Advanced** | `RHFFieldArray`, `RHFSlider`, `RHFRating`, `RHFFileUpload` |
+| **Advanced** | `RHFFieldArray`, `RHFSlider`, `RHFRating`, `RHFFileUpload`, `RHFMaskedField` |
 | **India-Specific** | `RHFAmountField`, `RHFAadhaarField`, `RHFPanField`, `RHFMobileField`, `RHFIfscField`, `RHFPincodeField`, `RHFGstField` |
 
 ## India-Specific Features
@@ -145,6 +108,38 @@ flowchart LR
   masked={true}  // Shows XXXX XXXX 1234
 />
 ```
+
+## Masked Input
+
+Requires `react-imask` for input masking:
+
+```bash
+npm install react-imask
+```
+
+```tsx
+<RHFMaskedField
+  name="phone"
+  label="Phone Number"
+  mask="(000) 000-0000"
+  placeholder="(___) ___-____"
+/>
+
+<RHFMaskedField
+  name="creditCard"
+  label="Credit Card"
+  mask="0000 0000 0000 0000"
+/>
+
+<RHFMaskedField
+  name="ssn"
+  label="SSN"
+  mask="000-00-0000"
+  lazy={false}  // Shows mask immediately
+/>
+```
+
+**Mask patterns:** `0` = digit, `a` = letter, `*` = any character
 
 ## Date Pickers
 
