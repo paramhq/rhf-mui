@@ -1,6 +1,6 @@
 {
   "name": "@paramhq/forms",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "React Hook Form + MUI + Zod form components library",
   "type": "module",
   "main": "./dist/index.js",
@@ -77,7 +77,14 @@
   ],
   "author": "",
   "license": "MIT",
-  "homepage": "https://www.npmjs.com/package/@paramhq/forms",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paramhq/rhf-mui.git"
+  },
+  "homepage": "https://github.com/paramhq/rhf-mui#readme",
+  "bugs": {
+    "url": "https://github.com/paramhq/rhf-mui/issues"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"

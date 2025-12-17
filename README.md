@@ -177,13 +177,10 @@ import dayjs from 'dayjs';
 
 ## Documentation
 
-View documentation in the [package files](https://www.npmjs.com/package/@paramhq/forms?activeTab=code):
-
-- `docs/01-architecture.md` - Why controlled components are used
-- `docs/02-performance.md` - Performance optimization guide  
-- `docs/03-components.md` - Complete component reference
-- `docs/04-llm-integration.md` - AI/LLM integration guide
-- `CLAUDE.md` - AI agent context file
+- [Architecture: Controlled Components](https://github.com/paramhq/rhf-mui/blob/main/docs/01-architecture.md)
+- [Performance Considerations](https://github.com/paramhq/rhf-mui/blob/main/docs/02-performance.md)
+- [Component Reference](https://github.com/paramhq/rhf-mui/blob/main/docs/03-components.md)
+- [LLM Integration Guide](https://github.com/paramhq/rhf-mui/blob/main/docs/04-llm-integration.md)
 
 ## Demo
 
