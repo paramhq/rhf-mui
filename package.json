@@ -1,5 +1,5 @@
 {
-  "name": "@paramhq/rhf-mui",
+  "name": "@paramhq/forms",
   "version": "1.0.0",
   "description": "React Hook Form + MUI + Zod form components library",
   "type": "module",

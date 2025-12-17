@@ -1,10 +1,10 @@
-# AI Agent Instructions for @paramhq/rhf-mui
+# AI Agent Instructions for @paramhq/forms
 
 This file provides context for AI coding assistants working with this codebase.
 
 ## Project Overview
 
-**@paramhq/rhf-mui** is a React form component library that integrates:
+**@paramhq/forms** is a React form component library that integrates:
 - React Hook Form (state management)
 - Material-UI (UI components)  
 - Zod (validation)

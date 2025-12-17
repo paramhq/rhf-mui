@@ -1,17 +1,17 @@
 # LLM Integration Guide
 
-This document is optimized for AI coding assistants (Claude, GPT, Copilot, etc.) to quickly understand and use @paramhq/rhf-mui.
+This document is optimized for AI coding assistants (Claude, GPT, Copilot, etc.) to quickly understand and use @paramhq/forms.
 
 ## Quick Reference
 
 ### Package Info
-- **Name**: `@paramhq/rhf-mui`
+- **Name**: `@paramhq/forms`
 - **Purpose**: React Hook Form + MUI + Zod form components
 - **Peer Dependencies**: react, react-hook-form, @hookform/resolvers, zod, @mui/material, @emotion/react, @emotion/styled
 
 ### Installation Command
 ```bash
-npm install @paramhq/rhf-mui react-hook-form @hookform/resolvers zod @mui/material @emotion/react @emotion/styled
+npm install @paramhq/forms react-hook-form @hookform/resolvers zod @mui/material @emotion/react @emotion/styled
 ```
 
 ---
@@ -20,7 +20,7 @@ npm install @paramhq/rhf-mui react-hook-form @hookform/resolvers zod @mui/materi
 
 ### Pattern 1: Basic Form
 ```tsx
-import { Form, RHFTextField, RHFSelect } from '@paramhq/rhf-mui';
+import { Form, RHFTextField, RHFSelect } from '@paramhq/forms';
 import { z } from 'zod';
 import { Button } from '@mui/material';
 
@@ -162,7 +162,7 @@ z.string().nullable()                // Can be null
 ## Complete Form Example
 
 ```tsx
-import { Form, RHFTextField, RHFSelect, RHFCheckbox, RHFDatePicker } from '@paramhq/rhf-mui';
+import { Form, RHFTextField, RHFSelect, RHFCheckbox, RHFDatePicker } from '@paramhq/forms';
 import { z } from 'zod';
 import { Button, Stack } from '@mui/material';
 
@@ -349,7 +349,7 @@ src/
 
 ## AI Instructions
 
-When implementing forms with @paramhq/rhf-mui:
+When implementing forms with @paramhq/forms:
 
 1. **Always define a Zod schema first** - It drives validation and TypeScript types
 2. **Use `z.infer<typeof schema>`** - For type-safe form data
