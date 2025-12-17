@@ -1,0 +1,82 @@
+{
+  "name": "@rhf-mui/core",
+  "version": "1.0.0",
+  "description": "React Hook Form + MUI + Zod form components library",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "clean": "rimraf dist"
+  },
+  "peerDependencies": {
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@hookform/resolvers": "^3.0.0",
+    "@mui/material": "^6.0.0 || ^7.0.0",
+    "@mui/x-date-pickers": "^7.0.0 || ^8.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-hook-form": "^7.0.0",
+    "zod": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@mui/x-date-pickers": {
+      "optional": true
+    },
+    "@hookform/devtools": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@hookform/devtools": "^4.3.2",
+    "@hookform/resolvers": "^3.9.1",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "@mui/x-date-pickers": "^7.24.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "dayjs": "^1.11.13",
+    "eslint": "^9.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
+    "rimraf": "^6.0.0",
+    "typescript": "^5.7.0",
+    "zod": "^3.24.0"
+  },
+  "keywords": [
+    "react",
+    "react-hook-form",
+    "mui",
+    "material-ui",
+    "zod",
+    "form",
+    "validation",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
