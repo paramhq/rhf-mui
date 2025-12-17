@@ -73,7 +73,7 @@ export function DateTimeDemo() {
               name="appointmentDate"
               label="Appointment Date"
               disablePast
-              maxDate={dayjs().add(3, 'month').toDate()}
+              maxDate={dayjs().add(3, 'month')}
               helperText="Select a date within next 3 months"
             />
           </Grid>
@@ -110,7 +110,7 @@ export function DateTimeDemo() {
             <RHFDateTimePicker
               name="eventDateTime"
               label="Event Date & Time"
-              minDateTime={dayjs().toDate()}
+              minDateTime={dayjs()}
               ampm
             />
           </Grid>
