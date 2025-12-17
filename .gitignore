@@ -59,3 +59,4 @@ apps/demo/dist/
 *.temp
 .vercel
 .netlify
+.serena/
