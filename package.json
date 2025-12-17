@@ -1,6 +1,6 @@
 {
   "name": "@paramhq/forms",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Hook Form + MUI + Zod form components library",
   "type": "module",
   "main": "./dist/index.js",
@@ -14,7 +14,10 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "docs",
+    "README.md",
+    "CLAUDE.md"
   ],
   "scripts": {
     "build": "tsc",
