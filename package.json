@@ -1,5 +1,5 @@
 {
-  "name": "@rhf-mui/core",
+  "name": "@paramhq/rhf-mui",
   "version": "1.0.0",
   "description": "React Hook Form + MUI + Zod form components library",
   "type": "module",
@@ -21,7 +21,9 @@
     "dev": "tsc --watch",
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "publish:npm": "npm publish --access public"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0",
@@ -77,6 +79,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/paramhq/rhf-mui.git"
+  },
+  "homepage": "https://github.com/paramhq/rhf-mui#readme",
+  "bugs": {
+    "url": "https://github.com/paramhq/rhf-mui/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

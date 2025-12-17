@@ -1,4 +1,4 @@
-# @rhf-mui/core
+# @paramhq/rhf-mui
 
 React Hook Form + MUI + Zod form components library.
 
@@ -17,7 +17,7 @@ A comprehensive collection of pre-built form components that integrate React Hoo
 ## Installation
 
 ```bash
-npm install @rhf-mui/core
+npm install @paramhq/rhf-mui
 
 # Peer dependencies
 npm install react-hook-form @hookform/resolvers zod @mui/material @emotion/react @emotion/styled
@@ -26,7 +26,7 @@ npm install react-hook-form @hookform/resolvers zod @mui/material @emotion/react
 ## Quick Start
 
 ```tsx
-import { Form, RHFTextField, RHFSelect } from '@rhf-mui/core';
+import { Form, RHFTextField, RHFSelect } from '@paramhq/rhf-mui';
 import { z } from 'zod';
 
 const schema = z.object({
