@@ -19,6 +19,7 @@ export type {
 
   // Text Field Props
   RHFTextFieldProps,
+  RHFMaskedFieldProps,
   RHFNumberFieldProps,
   RHFPasswordFieldProps,
   RHFTextAreaProps,

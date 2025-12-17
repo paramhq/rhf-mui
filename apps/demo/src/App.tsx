@@ -18,6 +18,7 @@ import { DateTimeDemo } from './demos/DateTimeDemo';
 import { FieldArrayDemo } from './demos/FieldArrayDemo';
 import { IndiaFieldsDemo } from './demos/IndiaFieldsDemo';
 import { CompleteFormDemo } from './demos/CompleteFormDemo';
+import { MaskedFieldsDemo } from './demos/MaskedFieldsDemo';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -81,6 +82,7 @@ function App() {
             <Tab label="Field Array" {...a11yProps(4)} />
             <Tab label="India Fields" {...a11yProps(5)} />
             <Tab label="Complete Form" {...a11yProps(6)} />
+            <Tab label="Masked Fields" {...a11yProps(7)} />
           </Tabs>
         </Paper>
 
@@ -104,6 +106,9 @@ function App() {
         </TabPanel>
         <TabPanel value={tabValue} index={6}>
           <CompleteFormDemo />
+        </TabPanel>
+        <TabPanel value={tabValue} index={7}>
+          <MaskedFieldsDemo />
         </TabPanel>
       </Container>
     </Box>

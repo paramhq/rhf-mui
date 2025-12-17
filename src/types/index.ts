@@ -103,6 +103,64 @@ export interface RHFTextFieldProps<
 }
 
 /**
+ * Props for RHFMaskedField
+ *
+ * Uses react-imask for input masking. Common mask patterns:
+ * - `0` - any digit (0-9)
+ * - `a` - any letter (a-z, A-Z)
+ * - `*` - any character
+ *
+ * @example
+ * ```tsx
+ * // Phone number
+ * <RHFMaskedField name="phone" mask="(000) 000-0000" />
+ *
+ * // Credit card
+ * <RHFMaskedField name="card" mask="0000 0000 0000 0000" />
+ *
+ * // Custom pattern
+ * <RHFMaskedField
+ *   name="code"
+ *   mask="AA-0000"
+ *   definitions={{ A: /[A-Z]/ }}
+ * />
+ * ```
+ */
+export interface RHFMaskedFieldProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName>,
+    OmitMUIConflicts<TextFieldProps> {
+  /**
+   * Mask pattern string or IMask options object
+   * - `0` - any digit
+   * - `a` - any letter
+   * - `*` - any character
+   */
+  mask: string | Record<string, unknown>;
+  /**
+   * Custom definitions for mask characters
+   * @example { A: /[A-Z]/, '#': /[0-9]/ }
+   */
+  definitions?: Record<string, RegExp>;
+  /** Whether to overwrite existing characters (default: undefined - uses IMask default) */
+  overwrite?: boolean;
+  /** Whether to show placeholder only when focused (default: true) */
+  lazy?: boolean;
+  /** Character to show for unfilled positions (default: '_') */
+  placeholderChar?: string;
+  /**
+   * Whether to return unmasked value (default: true)
+   * - `true` - returns value without mask characters (e.g., "1234567890")
+   * - `false` - returns value with mask (e.g., "(123) 456-7890")
+   * - `'typed'` - returns typed value
+   */
+  unmask?: boolean | 'typed';
+  /** Callback when value is accepted */
+  onAccept?: (value: string, maskRef: unknown) => void;
+}
+
+/**
  * Props for RHFNumberField
  */
 export interface RHFNumberFieldProps<

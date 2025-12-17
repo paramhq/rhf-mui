@@ -6,6 +6,7 @@ export { RHFTextField } from './RHFTextField';
 export { RHFNumberField } from './RHFNumberField';
 export { RHFPasswordField } from './RHFPasswordField';
 export { RHFTextArea } from './RHFTextArea';
+export { RHFMaskedField } from './RHFMaskedField';
 
 // Selection Components
 export { RHFSelect } from './RHFSelect';
