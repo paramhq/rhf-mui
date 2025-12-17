@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { z } from 'zod';
-import { Paper, Typography, Button, Grid2 as Grid, Divider, Box, Alert } from '@mui/material';
+import { Paper, Typography, Button, Grid, Divider, Box, Alert } from '@mui/material';
 import {
   Form,
   RHFAmountField,
@@ -12,7 +12,7 @@ import {
   RHFGstField,
   validatePanFormat,
   validateAadhaarChecksum,
-} from '@rhf-mui/core';
+} from '@paramhq/forms';
 
 const indiaSchema = z.object({
   loanAmount: z.number().min(10000, 'Minimum loan amount is Rs. 10,000'),

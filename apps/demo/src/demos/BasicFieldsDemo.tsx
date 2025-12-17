@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Paper, Typography, Button, Grid2 as Grid, Divider, Box } from '@mui/material';
+import { Paper, Typography, Button, Grid, Divider, Box } from '@mui/material';
 import {
   Form,
   RHFTextField,
@@ -9,7 +9,7 @@ import {
   RHFSlider,
   RHFRating,
   RHFFileUpload,
-} from '@rhf-mui/core';
+} from '@paramhq/forms';
 
 const basicSchema = z.object({
   firstName: z.string().min(2, 'First name must be at least 2 characters'),

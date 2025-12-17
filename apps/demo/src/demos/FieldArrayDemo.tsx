@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { Paper, Typography, Button, Grid2 as Grid, Divider, Box } from '@mui/material';
+import { Paper, Typography, Button, Grid, Divider, Box } from '@mui/material';
 import {
   Form,
   RHFFieldArray,
   RHFTextField,
   RHFNumberField,
   RHFSelect,
-} from '@rhf-mui/core';
+} from '@paramhq/forms';
 
 const phoneTypes = [
   { value: 'mobile', label: 'Mobile' },

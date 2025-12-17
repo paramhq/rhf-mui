@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Paper, Typography, Button, Grid2 as Grid, Divider, Box } from '@mui/material';
+import { Paper, Typography, Button, Grid, Divider, Box } from '@mui/material';
 import {
   Form,
   RHFSelect,
@@ -7,7 +7,7 @@ import {
   RHFCheckbox,
   RHFCheckboxGroup,
   RHFSwitch,
-} from '@rhf-mui/core';
+} from '@paramhq/forms';
 
 const selectionSchema = z.object({
   country: z.string().min(1, 'Please select a country'),

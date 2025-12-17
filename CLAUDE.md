@@ -108,6 +108,22 @@ npm run build
 npm run publish:npm
 ```
 
+## MUI v7 Requirements
+
+This library requires **MUI v7+**. Key patterns to follow:
+
+| Pattern | Correct (v7) | Deprecated (v6) |
+|---------|--------------|-----------------|
+| Input props | `slotProps={{ input: {} }}` | `InputProps={}` |
+| HTML input | `slotProps={{ htmlInput: {} }}` | `inputProps={}` |
+| Adornments | `slotProps={{ input: { endAdornment: ... }}}` | `endAdornment={}` direct prop |
+| Grid layout | `<Grid size={{ xs: 12 }}>` | `<Grid2 as Grid>` |
+| Components | `slots={{}}` | `components={{}}` |
+
+**Reference:** https://mui.com/material-ui/migration/upgrade-to-v7/
+
+See `docs/05-mui-v7-migration-checklist.md` for full migration checklist.
+
 ## Important Notes
 
 1. **Controlled Components Required**: MUI components don't work with `register()`, must use `useController()`

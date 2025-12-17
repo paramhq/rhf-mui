@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { z } from 'zod';
-import { Paper, Typography, Button, Grid2 as Grid, Divider, Box, Chip } from '@mui/material';
+import { Paper, Typography, Button, Grid, Divider, Box, Chip } from '@mui/material';
 import {
   Form,
   RHFAutocomplete,
@@ -8,7 +8,7 @@ import {
   RHFAsyncAutocomplete,
   RHFCreatableAutocomplete,
   SelectOption,
-} from '@rhf-mui/core';
+} from '@paramhq/forms';
 
 const autocompleteSchema = z.object({
   country: z.string().min(1, 'Please select a country'),

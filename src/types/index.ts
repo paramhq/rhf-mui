@@ -356,16 +356,17 @@ export interface RHFSwitchProps<
  */
 export interface RHFDatePickerProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TDate = unknown
 > extends RHFBaseProps<TFieldValues, TName> {
   /** Label for the date picker */
   label?: string;
   /** Placeholder text */
   placeholder?: string;
-  /** Minimum selectable date */
-  minDate?: Date;
-  /** Maximum selectable date */
-  maxDate?: Date;
+  /** Minimum selectable date (Date, Dayjs, or any date adapter value) */
+  minDate?: TDate;
+  /** Maximum selectable date (Date, Dayjs, or any date adapter value) */
+  maxDate?: TDate;
   /** Date format string */
   format?: string;
   /** Disable future dates */
@@ -385,7 +386,8 @@ export interface RHFDatePickerProps<
  */
 export interface RHFTimePickerProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TDate = unknown
 > extends RHFBaseProps<TFieldValues, TName> {
   /** Label for the time picker */
   label?: string;
@@ -393,10 +395,10 @@ export interface RHFTimePickerProps<
   placeholder?: string;
   /** Use 12-hour format with AM/PM */
   ampm?: boolean;
-  /** Minimum selectable time */
-  minTime?: Date;
-  /** Maximum selectable time */
-  maxTime?: Date;
+  /** Minimum selectable time (Date, Dayjs, or any date adapter value) */
+  minTime?: TDate;
+  /** Maximum selectable time (Date, Dayjs, or any date adapter value) */
+  maxTime?: TDate;
   /** Size variant */
   size?: 'small' | 'medium';
 }
@@ -406,16 +408,17 @@ export interface RHFTimePickerProps<
  */
 export interface RHFDateTimePickerProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TDate = unknown
 > extends RHFBaseProps<TFieldValues, TName> {
   /** Label for the picker */
   label?: string;
   /** Placeholder text */
   placeholder?: string;
-  /** Minimum selectable date/time */
-  minDateTime?: Date;
-  /** Maximum selectable date/time */
-  maxDateTime?: Date;
+  /** Minimum selectable date/time (Date, Dayjs, or any date adapter value) */
+  minDateTime?: TDate;
+  /** Maximum selectable date/time (Date, Dayjs, or any date adapter value) */
+  maxDateTime?: TDate;
   /** Use 12-hour format with AM/PM */
   ampm?: boolean;
   /** Size variant */

@@ -3,6 +3,7 @@ import { useController, useFormContext, FieldValues, FieldPath } from 'react-hoo
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormHelperText from '@mui/material/FormHelperText';
 import ListSubheader from '@mui/material/ListSubheader';
@@ -135,19 +136,24 @@ export function RHFSelect<
         onBlur={onBlur}
         inputRef={ref}
         displayEmpty={!!placeholder}
-        endAdornment={
-          clearable && value ? (
-            <InputAdornment position="end" sx={{ mr: 2 }}>
-              <IconButton
-                size="small"
-                onClick={handleClear}
-                aria-label="Clear selection"
-                edge="end"
-              >
-                <ClearIcon fontSize="small" />
-              </IconButton>
-            </InputAdornment>
-          ) : undefined
+        input={
+          <OutlinedInput
+            label={label}
+            endAdornment={
+              clearable && value ? (
+                <InputAdornment position="end" sx={{ mr: 2 }}>
+                  <IconButton
+                    size="small"
+                    onClick={handleClear}
+                    aria-label="Clear selection"
+                    edge="end"
+                  >
+                    <ClearIcon fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ) : undefined
+            }
+          />
         }
         renderValue={
           placeholder && !value

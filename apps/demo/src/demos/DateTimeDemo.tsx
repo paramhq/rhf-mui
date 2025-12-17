@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
-import { Paper, Typography, Button, Grid2 as Grid, Divider, Box } from '@mui/material';
-import { Form, RHFDatePicker, RHFTimePicker, RHFDateTimePicker } from '@rhf-mui/core';
+import { Paper, Typography, Button, Grid, Divider, Box } from '@mui/material';
+import { Form, RHFDatePicker, RHFTimePicker, RHFDateTimePicker } from '@paramhq/forms';
 
 const dateTimeSchema = z.object({
   birthDate: z.any().refine((val) => val !== null, 'Birth date is required'),

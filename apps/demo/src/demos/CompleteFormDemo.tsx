@@ -4,7 +4,7 @@ import {
   Paper,
   Typography,
   Button,
-  Grid2 as Grid,
+  Grid,
   Divider,
   Box,
   Stepper,
@@ -28,7 +28,7 @@ import {
   RHFFieldArray,
   RHFTextArea,
   validatePanFormat,
-} from '@rhf-mui/core';
+} from '@paramhq/forms';
 
 const memberSchema = z.object({
   // Personal Details
