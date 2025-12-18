@@ -1,118 +1,26 @@
 {
-  "name": "@paramhq/forms",
-  "version": "3.0.0",
-  "description": "React Hook Form + MUI + Zod form components library",
-  "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "name": "rhf-mui-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monorepo for @paramhq/forms library and demo app",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
-    "lint": "eslint src --ext .ts,.tsx",
-    "typecheck": "tsc --noEmit",
-    "clean": "rimraf dist",
-    "prepublishOnly": "npm run clean && npm run build",
-    "publish:npm": "npm publish --access public"
-  },
-  "peerDependencies": {
-    "@emotion/react": "^11.0.0",
-    "@emotion/styled": "^11.0.0",
-    "@hookform/resolvers": "^5.0.0",
-    "@mui/material": "^7.0.0",
-    "@mui/x-date-pickers": "^7.0.0 || ^8.0.0",
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0",
-    "react-hook-form": "^7.0.0",
-    "react-imask": "^7.0.0",
-    "zod": "^3.0.0 || ^4.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@mui/x-date-pickers": {
-      "optional": true
-    },
-    "@hookform/devtools": {
-      "optional": true
-    },
-    "react-imask": {
-      "optional": true
-    },
-    "react-phone-number-input": {
-      "optional": true
-    },
-    "@tiptap/react": {
-      "optional": true
-    },
-    "@tiptap/starter-kit": {
-      "optional": true
-    },
-    "@tiptap/extension-underline": {
-      "optional": true
-    },
-    "@tiptap/extension-link": {
-      "optional": true
-    },
-    "signature_pad": {
-      "optional": true
-    },
-    "react-colorful": {
-      "optional": true
-    }
+    "build": "pnpm --filter @paramhq/forms build",
+    "dev": "pnpm --filter @paramhq/forms dev",
+    "demo": "pnpm --filter @rhf-mui/demo dev",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "clean": "pnpm -r clean"
   },
   "devDependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@hookform/devtools": "^4.3.2",
-    "@hookform/resolvers": "^5.0.0",
-    "@mui/icons-material": "^7.0.0",
-    "@mui/material": "^7.0.0",
-    "@mui/x-date-pickers": "^7.24.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "dayjs": "^1.11.13",
     "eslint": "^9.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-hook-form": "^7.54.2",
-    "react-imask": "^7.6.1",
     "rimraf": "^6.0.0",
-    "typescript": "^5.7.0",
-    "zod": "^4.0.0"
+    "typescript": "^5.7.0"
   },
-  "keywords": [
-    "react",
-    "react-hook-form",
-    "mui",
-    "material-ui",
-    "zod",
-    "form",
-    "validation",
-    "typescript"
-  ],
-  "author": "",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paramhq/rhf-mui.git"
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
   },
-  "homepage": "https://github.com/paramhq/rhf-mui#readme",
-  "bugs": {
-    "url": "https://github.com/paramhq/rhf-mui/issues"
-  },
-  "publishConfig": {
-    "access": "public",
-    "registry": "https://registry.npmjs.org/"
-  }
+  "packageManager": "pnpm@8.15.0"
 }

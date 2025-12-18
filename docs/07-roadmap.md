@@ -121,21 +121,21 @@ timeline
 
 | Component | Description | Status |
 |-----------|-------------|--------|
-| `RHFRichText` | Rich text editor (Tiptap/Quill) | Planned |
-| `RHFColorPicker` | Color selection with presets | Planned |
-| `RHFOTP` | One-time password input | Planned |
-| `RHFPhoneInput` | International phone with country code | Planned |
-| `RHFSignature` | Signature pad capture | Planned |
+| `RHFRichText` | Rich text editor (Tiptap/Quill) | ✅ Done |
+| `RHFColorPicker` | Color selection with presets | ✅ Done |
+| `RHFOTP` | One-time password input | ✅ Done |
+| `RHFPhoneInput` | International phone with country code | ✅ Done |
+| `RHFSignature` | Signature pad capture | ✅ Done |
 
 ### 3.2 Medium Priority Components
 
 | Component | Description | Status |
 |-----------|-------------|--------|
-| `RHFTransferList` | Dual-list selection | Planned |
-| `RHFTreeSelect` | Hierarchical selection | Planned |
-| `RHFDateRangePicker` | Date range selection | Planned |
-| `RHFCreditCard` | Credit card input with validation | Planned |
-| `RHFAddressAutocomplete` | Address with Google/Mapbox | Planned |
+| `RHFTransferList` | Dual-list selection | ✅ Done |
+| `RHFTreeSelect` | Hierarchical selection | ✅ Done |
+| `RHFDateRangePicker` | Date range selection | ✅ Done |
+| `RHFCreditCard` | Credit card input with validation | ✅ Done |
+| `RHFAddressAutocomplete` | Address with Google/Mapbox | ✅ Done |
 
 ### 3.3 India-Specific Additions
 

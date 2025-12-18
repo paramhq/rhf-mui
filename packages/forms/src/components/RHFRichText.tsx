@@ -116,9 +116,7 @@ export function RHFRichText<
 
     const loadTiptap = async () => {
       try {
-        // @ts-expect-error - Optional peer dependency
         const tiptapReactModule = await import('@tiptap/react');
-        // @ts-expect-error - Optional peer dependency
         const starterKitModule = await import('@tiptap/starter-kit');
 
         const tiptapReact = tiptapReactModule;
@@ -129,7 +127,6 @@ export function RHFRichText<
         let linkExt = null;
 
         try {
-          // @ts-expect-error - Optional peer dependency
           const underlineModule = await import('@tiptap/extension-underline');
           underlineExt = underlineModule.default;
         } catch {
@@ -137,7 +134,6 @@ export function RHFRichText<
         }
 
         try {
-          // @ts-expect-error - Optional peer dependency
           const linkModule = await import('@tiptap/extension-link');
           linkExt = linkModule.default;
         } catch {
@@ -147,7 +143,8 @@ export function RHFRichText<
         if (!mounted) return;
 
         // Build extensions array
-        const extensions: unknown[] = [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const extensions: any[] = [
           starterKit.default.configure({
             heading: { levels: [1, 2, 3] },
           }),
@@ -164,11 +161,12 @@ export function RHFRichText<
         }
 
         // Create editor instance
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const editorInstance = new tiptapReact.Editor({
           extensions,
           content: value ?? '',
           editable: !disabled,
-          onUpdate: ({ editor: e }: { editor: TiptapEditor }) => {
+          onUpdate: ({ editor: e }: { editor: any }) => {
             let newValue: string | object;
             switch (outputFormat) {
               case 'json':
@@ -348,12 +346,15 @@ export function RHFRichText<
           }}
         >
           <ToggleButtonGroup size="small" sx={{ flexWrap: 'wrap' }}>
-            {visibleButtons.map((btn, index) => (
-              <React.Fragment key={btn.name}>
-                {index > 0 && ['heading', 'bulletList', 'blockquote', 'link'].includes(btn.name) && (
-                  <Divider flexItem orientation="vertical" sx={{ mx: 0.5 }} />
-                )}
-                <Tooltip title={btn.tooltip}>
+            {visibleButtons.flatMap((btn, index) => {
+              const elements: React.ReactNode[] = [];
+              if (index > 0 && ['heading', 'bulletList', 'blockquote', 'link'].includes(btn.name)) {
+                elements.push(
+                  <Divider key={`divider-${btn.name}`} flexItem orientation="vertical" sx={{ mx: 0.5 }} />
+                );
+              }
+              elements.push(
+                <Tooltip key={btn.name} title={btn.tooltip}>
                   <ToggleButton
                     value={btn.name}
                     selected={editor?.isActive(btn.name) ?? false}
@@ -364,8 +365,9 @@ export function RHFRichText<
                     {btn.icon}
                   </ToggleButton>
                 </Tooltip>
-              </React.Fragment>
-            ))}
+              );
+              return elements;
+            })}
           </ToggleButtonGroup>
         </Box>
 

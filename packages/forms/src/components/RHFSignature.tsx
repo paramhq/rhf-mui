@@ -113,7 +113,6 @@ export function RHFSignature<
 
     const loadSignaturePad = async () => {
       try {
-        // @ts-expect-error - Optional peer dependency
         const signaturePadModule = await import('signature_pad');
         if (mounted) {
           setSignaturePad(() => signaturePadModule.default as SignaturePadConstructor);

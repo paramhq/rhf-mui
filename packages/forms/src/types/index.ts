@@ -835,3 +835,281 @@ export interface SchemaContextValue {
   getFieldMeta: (path: string) => FieldMeta;
   isFieldRequired: (path: string) => boolean;
 }
+
+
+// ============================================================================
+// Transfer List Props
+// ============================================================================
+
+/**
+ * Item for transfer list
+ */
+export interface TransferListItem {
+  /** Unique value for the item */
+  value: string | number;
+  /** Display label */
+  label: string;
+  /** Optional description */
+  description?: string;
+  /** Whether item is disabled */
+  disabled?: boolean;
+}
+
+/**
+ * Props for RHFTransferList
+ */
+export interface RHFTransferListProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the component */
+  label?: string;
+  /** All available items */
+  items: TransferListItem[];
+  /** Title for left (available) list */
+  leftTitle?: string;
+  /** Title for right (selected) list */
+  rightTitle?: string;
+  /** Enable search in lists */
+  searchable?: boolean;
+  /** Search placeholder text */
+  searchPlaceholder?: string;
+  /** Height of each list */
+  height?: number | string;
+  /** Message when left list is empty */
+  emptyLeftMessage?: string;
+  /** Message when right list is empty */
+  emptyRightMessage?: string;
+}
+
+// ============================================================================
+// Tree Select Props
+// ============================================================================
+
+/**
+ * Node for tree select
+ */
+export interface TreeNode {
+  /** Unique value for the node */
+  value: string | number;
+  /** Display label */
+  label: string;
+  /** Optional description */
+  description?: string;
+  /** Whether node is disabled */
+  disabled?: boolean;
+  /** Child nodes */
+  children?: TreeNode[];
+}
+
+/**
+ * Props for RHFTreeSelect
+ */
+export interface RHFTreeSelectProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the select */
+  label?: string;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Tree nodes to display */
+  nodes: TreeNode[];
+  /** Allow multiple selection */
+  multiple?: boolean;
+  /** Show checkboxes for selection */
+  checkboxSelection?: boolean;
+  /** Expand all nodes by default */
+  expandAll?: boolean;
+  /** Size variant */
+  size?: 'small' | 'medium';
+  /** Maximum height of dropdown */
+  maxHeight?: number;
+  /** Allow clearing selection */
+  clearable?: boolean;
+}
+
+// ============================================================================
+// Date Range Picker Props
+// ============================================================================
+
+/**
+ * Date range value type
+ */
+export interface DateRange<TDate = unknown> {
+  /** Start date */
+  start: TDate | null;
+  /** End date */
+  end: TDate | null;
+}
+
+/**
+ * Date range preset
+ */
+export interface DateRangePreset<TDate = unknown> {
+  /** Display label for preset */
+  label: string;
+  /** Function to get the date range values */
+  getValue: () => DateRange<TDate>;
+}
+
+/**
+ * Props for RHFDateRangePicker
+ */
+export interface RHFDateRangePickerProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+  TDate = unknown
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the component */
+  label?: string;
+  /** Label for start date picker */
+  startLabel?: string;
+  /** Label for end date picker */
+  endLabel?: string;
+  /** Date format string */
+  format?: string;
+  /** Minimum selectable date */
+  minDate?: TDate;
+  /** Maximum selectable date */
+  maxDate?: TDate;
+  /** Disable future dates */
+  disableFuture?: boolean;
+  /** Disable past dates */
+  disablePast?: boolean;
+  /** Size variant */
+  size?: 'small' | 'medium';
+  /** Layout direction */
+  direction?: 'row' | 'column';
+  /** Spacing between pickers */
+  spacing?: number;
+  /** Separator text between pickers */
+  separator?: string;
+  /** Show preset buttons */
+  showPresets?: boolean;
+  /** Preset date ranges */
+  presets?: DateRangePreset<TDate>[];
+}
+
+// ============================================================================
+// Credit Card Props
+// ============================================================================
+
+/**
+ * Supported card types
+ */
+export type CardType = 'visa' | 'mastercard' | 'amex' | 'discover' | 'diners' | 'jcb' | 'rupay';
+
+/**
+ * Credit card value type
+ */
+export interface CreditCardValue {
+  /** Card number (digits only) */
+  number: string;
+  /** Expiry date (MMYY format) */
+  expiry: string;
+  /** CVV/CVC code */
+  cvv: string;
+  /** Cardholder name (optional) */
+  cardholderName?: string;
+  /** Detected card type */
+  cardType?: CardType | 'unknown';
+}
+
+/**
+ * Props for RHFCreditCard
+ */
+export interface RHFCreditCardProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the component */
+  label?: string;
+  /** Size variant */
+  size?: 'small' | 'medium';
+  /** Show cardholder name field */
+  showCardholderName?: boolean;
+  /** Accepted card types */
+  acceptedCards?: CardType[];
+  /** Called when card type is detected */
+  onCardTypeChange?: (cardType: CardType | 'unknown') => void;
+}
+
+// ============================================================================
+// Address Autocomplete Props
+// ============================================================================
+
+/**
+ * Address suggestion from autocomplete
+ */
+export interface AddressSuggestion {
+  /** Place ID (for Google Places) */
+  placeId: string;
+  /** Full description/address text */
+  description: string;
+  /** Main text (usually street/place name) */
+  mainText?: string;
+  /** Secondary text (usually city, state) */
+  secondaryText?: string;
+}
+
+/**
+ * Parsed address value
+ */
+export interface AddressValue {
+  /** Full formatted address */
+  formatted: string;
+  /** Street address */
+  street?: string;
+  /** City/locality */
+  city?: string;
+  /** State/province */
+  state?: string;
+  /** State/province code */
+  stateCode?: string;
+  /** Postal/ZIP code */
+  postalCode?: string;
+  /** Country name */
+  country?: string;
+  /** Country code (ISO 3166-1 alpha-2) */
+  countryCode?: string;
+  /** Latitude */
+  lat?: number;
+  /** Longitude */
+  lng?: number;
+  /** Place ID (for Google Places) */
+  placeId?: string;
+}
+
+/**
+ * Props for RHFAddressAutocomplete
+ */
+export interface RHFAddressAutocompleteProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the component */
+  label?: string;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Size variant */
+  size?: 'small' | 'medium';
+  /** Google Maps API key (required for Google Places) */
+  apiKey?: string;
+  /** Restrict to specific countries (ISO 3166-1 alpha-2 codes) */
+  countries?: string[];
+  /** Place types to search for */
+  types?: string[];
+  /** Show parsed address fields below input */
+  showParsedFields?: boolean;
+  /** Debounce delay in ms */
+  debounceMs?: number;
+  /** Minimum characters before searching */
+  minChars?: number;
+  /** Custom function to fetch suggestions (for non-Google providers) */
+  fetchSuggestions?: (input: string) => Promise<AddressSuggestion[]>;
+  /** Custom function to get full address from suggestion */
+  onSelectSuggestion?: (suggestion: AddressSuggestion) => Promise<AddressValue>;
+  /** Called when address is selected */
+  onAddressSelect?: (address: AddressValue) => void;
+}

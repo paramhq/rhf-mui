@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, KeyboardEvent, ClipboardEvent } from 'react';
+import React, { useRef, useCallback, KeyboardEvent, ClipboardEvent, FocusEvent } from 'react';
 import { useController, useFormContext, FieldValues, FieldPath } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -164,6 +164,22 @@ export function RHFOTP<
 
   const inputWidth = size === 'small' ? 40 : 48;
   const inputHeight = size === 'small' ? 40 : 56;
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Handle blur at container level - only trigger form's onBlur when focus leaves the entire OTP component
+  const handleContainerBlur = useCallback(
+    (e: FocusEvent<HTMLDivElement>) => {
+      // Check if the new focused element is still within our container
+      const container = containerRef.current;
+      const relatedTarget = e.relatedTarget as Node | null;
+      
+      // If focus is moving outside the container, trigger onBlur
+      if (!container?.contains(relatedTarget)) {
+        onBlur();
+      }
+    },
+    [onBlur]
+  );
 
   return (
     <Box>
@@ -178,6 +194,8 @@ export function RHFOTP<
       )}
 
       <Box
+        ref={containerRef}
+        onBlur={handleContainerBlur}
         sx={{
           display: 'flex',
           gap: 1,
@@ -194,7 +212,6 @@ export function RHFOTP<
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e as KeyboardEvent<HTMLInputElement>)}
               onPaste={handlePaste}
-              onBlur={onBlur}
               disabled={disabled}
               error={!!error}
               variant={variant}

@@ -10,11 +10,17 @@ import {
 } from '@paramhq/forms';
 
 const advancedSchema = z.object({
-  otp: z.string().length(6, 'OTP must be 6 digits'),
+  // OTP: only validate on submit (allow partial input during typing)
+  otp: z.string().optional(),
+  otpWithSeparator: z.string().optional(),
   brandColor: z.string().regex(/^#([A-Fa-f0-9]{6})$/, 'Invalid hex color'),
-  phone: z.string().min(10, 'Phone number is required'),
-  content: z.string().min(10, 'Content must be at least 10 characters'),
-  signature: z.string().min(1, 'Signature is required'),
+  themeColor: z.string().optional(),
+  // Phone: optional, only validate format on submit
+  phone: z.string().optional(),
+  phoneIndia: z.string().optional(),
+  content: z.string().optional(),
+  signature: z.string().optional(),
+  signatureBlue: z.string().optional(),
 });
 
 type AdvancedFormData = z.infer<typeof advancedSchema>;
@@ -37,10 +43,10 @@ export function AdvancedFieldsDemo() {
       <Alert severity="info" sx={{ mb: 2 }}>
         Some components require optional peer dependencies:
         <ul style={{ margin: '8px 0', paddingLeft: 20 }}>
-          <li><code>react-phone-number-input</code> - for RHFPhoneInput</li>
           <li><code>@tiptap/react @tiptap/starter-kit</code> - for RHFRichText</li>
           <li><code>signature_pad</code> - for RHFSignature</li>
         </ul>
+        Note: RHFPhoneInput now uses pure MUI components (no external dependencies).
       </Alert>
 
       <Divider sx={{ my: 2 }} />
@@ -49,10 +55,14 @@ export function AdvancedFieldsDemo() {
         schema={advancedSchema}
         defaultValues={{
           otp: '',
+          otpWithSeparator: '',
           brandColor: '#2196f3',
+          themeColor: '#1976d2',
           phone: '',
+          phoneIndia: '',
           content: '',
           signature: '',
+          signatureBlue: '',
         }}
         onSubmit={handleSubmit}
       >
@@ -78,7 +88,7 @@ export function AdvancedFieldsDemo() {
               OTP with Separator
             </Typography>
             <RHFOTP
-              name="otp"
+              name="otpWithSeparator"
               length={6}
               type="number"
               separator="-"
@@ -103,7 +113,7 @@ export function AdvancedFieldsDemo() {
           {/* Color Picker with custom presets */}
           <Grid size={{ xs: 12, sm: 6 }}>
             <RHFColorPicker
-              name="brandColor"
+              name="themeColor"
               label="Theme Color (Custom Presets)"
               presets={[
                 '#1976d2', '#388e3c', '#d32f2f', '#7b1fa2',
@@ -130,7 +140,7 @@ export function AdvancedFieldsDemo() {
           {/* Phone Input - India default */}
           <Grid size={{ xs: 12, sm: 6 }}>
             <RHFPhoneInput
-              name="phone"
+              name="phoneIndia"
               label="Phone (India Default)"
               defaultCountry="IN"
               onCountryChange={(country) => console.log('Country changed:', country)}
@@ -171,7 +181,7 @@ export function AdvancedFieldsDemo() {
           {/* Signature Pad - Custom styling */}
           <Grid size={{ xs: 12, md: 6 }}>
             <RHFSignature
-              name="signature"
+              name="signatureBlue"
               label="Signature (Blue Ink)"
               width={400}
               height={200}

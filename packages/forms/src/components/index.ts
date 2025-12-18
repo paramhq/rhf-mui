@@ -49,3 +49,16 @@ export { RHFMobileField } from './RHFMobileField';
 export { RHFIfscField } from './RHFIfscField';
 export { RHFPincodeField } from './RHFPincodeField';
 export { RHFGstField } from './RHFGstField';
+
+// Advanced Selection Components
+export { RHFTransferList } from './RHFTransferList';
+export { RHFTreeSelect } from './RHFTreeSelect';
+
+// Date Range Component
+export { RHFDateRangePicker } from './RHFDateRangePicker';
+
+// Payment Components
+export { RHFCreditCard, validateLuhn, validateExpiry, detectCardType } from './RHFCreditCard';
+
+// Address Components
+export { RHFAddressAutocomplete } from './RHFAddressAutocomplete';

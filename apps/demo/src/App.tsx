@@ -20,6 +20,7 @@ import { IndiaFieldsDemo } from './demos/IndiaFieldsDemo';
 import { CompleteFormDemo } from './demos/CompleteFormDemo';
 import { MaskedFieldsDemo } from './demos/MaskedFieldsDemo';
 import { AdvancedFieldsDemo } from './demos/AdvancedFieldsDemo';
+import { MediumPriorityDemo } from './demos/MediumPriorityDemo';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -85,6 +86,7 @@ function App() {
             <Tab label="Complete Form" {...a11yProps(6)} />
             <Tab label="Masked Fields" {...a11yProps(7)} />
             <Tab label="Advanced" {...a11yProps(8)} />
+            <Tab label="Medium Priority" {...a11yProps(9)} />
           </Tabs>
         </Paper>
 
@@ -114,6 +116,9 @@ function App() {
         </TabPanel>
         <TabPanel value={tabValue} index={8}>
           <AdvancedFieldsDemo />
+        </TabPanel>
+        <TabPanel value={tabValue} index={9}>
+          <MediumPriorityDemo />
         </TabPanel>
       </Container>
     </Box>
