@@ -46,6 +46,27 @@
     },
     "react-imask": {
       "optional": true
+    },
+    "react-phone-number-input": {
+      "optional": true
+    },
+    "@tiptap/react": {
+      "optional": true
+    },
+    "@tiptap/starter-kit": {
+      "optional": true
+    },
+    "@tiptap/extension-underline": {
+      "optional": true
+    },
+    "@tiptap/extension-link": {
+      "optional": true
+    },
+    "signature_pad": {
+      "optional": true
+    },
+    "react-colorful": {
+      "optional": true
     }
   },
   "devDependencies": {

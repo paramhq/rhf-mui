@@ -575,6 +575,127 @@ export interface RHFRatingProps<
 }
 
 /**
+ * Props for RHFOTP (One-Time Password)
+ */
+export interface RHFOTPProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Number of OTP digits (default: 6) */
+  length?: number;
+  /** Auto-focus first input */
+  autoFocus?: boolean;
+  /** MUI TextField variant */
+  variant?: 'outlined' | 'filled' | 'standard';
+  /** Size of input boxes */
+  size?: 'small' | 'medium';
+  /** Input type - 'number' restricts to digits only */
+  type?: 'text' | 'number';
+  /** Label for the OTP input */
+  label?: string;
+  /** Called when all digits are entered */
+  onComplete?: (otp: string) => void;
+  /** Separator character between groups (e.g., "-") */
+  separator?: string;
+  /** Position(s) to show separator (e.g., "3" or "3,6") */
+  separatorPosition?: string;
+}
+
+/**
+ * Props for RHFColorPicker
+ */
+export interface RHFColorPickerProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the color picker */
+  label?: string;
+  /** Preset color options */
+  presets?: string[];
+  /** Show alpha channel slider */
+  showAlpha?: boolean;
+  /** Color format for value */
+  format?: 'hex' | 'rgb' | 'hsl';
+  /** Size variant */
+  size?: 'small' | 'medium';
+}
+
+/**
+ * Props for RHFPhoneInput
+ */
+export interface RHFPhoneInputProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the phone input */
+  label?: string;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Default country code (e.g., "US", "IN") */
+  defaultCountry?: string;
+  /** Only allow these countries */
+  countries?: string[];
+  /** International or national format */
+  international?: boolean;
+  /** Size variant */
+  size?: 'small' | 'medium';
+  /** Called when country changes */
+  onCountryChange?: (country: string | undefined) => void;
+}
+
+/**
+ * Props for RHFRichText
+ */
+export interface RHFRichTextProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the editor */
+  label?: string;
+  /** Placeholder text */
+  placeholder?: string;
+  /** Minimum height of editor */
+  minHeight?: number | string;
+  /** Maximum height of editor (enables scroll) */
+  maxHeight?: number | string;
+  /** Output format */
+  outputFormat?: 'html' | 'json' | 'text';
+  /** Toolbar options to show */
+  toolbar?: ('bold' | 'italic' | 'underline' | 'strike' | 'heading' | 'bulletList' | 'orderedList' | 'blockquote' | 'link' | 'code' | 'codeBlock')[];
+  /** Enable mentions (@username) */
+  mentions?: boolean;
+  /** Mention suggestions */
+  mentionSuggestions?: Array<{ id: string; label: string }>;
+}
+
+/**
+ * Props for RHFSignature
+ */
+export interface RHFSignatureProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends RHFBaseProps<TFieldValues, TName> {
+  /** Label for the signature pad */
+  label?: string;
+  /** Width of signature canvas */
+  width?: number;
+  /** Height of signature canvas */
+  height?: number;
+  /** Pen color */
+  penColor?: string;
+  /** Background color */
+  backgroundColor?: string;
+  /** Line width/thickness */
+  lineWidth?: number;
+  /** Output format */
+  outputFormat?: 'base64' | 'svg' | 'blob';
+  /** Show clear button */
+  showClearButton?: boolean;
+  /** Clear button text */
+  clearButtonText?: string;
+}
+
+/**
  * Props for RHFFileUpload
  */
 export interface RHFFileUploadProps<

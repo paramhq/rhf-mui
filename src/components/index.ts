@@ -34,6 +34,13 @@ export { RHFSlider } from './RHFSlider';
 export { RHFRating } from './RHFRating';
 export { RHFFileUpload } from './RHFFileUpload';
 
+// Advanced Components
+export { RHFOTP } from './RHFOTP';
+export { RHFColorPicker } from './RHFColorPicker';
+export { RHFPhoneInput, isValidPhoneNumber } from './RHFPhoneInput';
+export { RHFRichText } from './RHFRichText';
+export { RHFSignature } from './RHFSignature';
+
 // India-Specific Components
 export { RHFAmountField } from './RHFAmountField';
 export { RHFAadhaarField } from './RHFAadhaarField';

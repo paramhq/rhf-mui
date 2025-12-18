@@ -52,6 +52,13 @@ export type {
   RHFRatingProps,
   RHFFileUploadProps,
 
+  // Advanced Props
+  RHFOTPProps,
+  RHFColorPickerProps,
+  RHFPhoneInputProps,
+  RHFRichTextProps,
+  RHFSignatureProps,
+
   // India-Specific Props
   RHFAmountFieldProps,
   RHFAadhaarFieldProps,
