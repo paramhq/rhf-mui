@@ -58,6 +58,8 @@ export interface FormProps<
   defaultValues?: Partial<TFieldValues>;
   /** Called on successful form submission */
   onSubmit: (data: TFieldValues) => void | Promise<void>;
+  /** Called when form validation fails */
+  onInvalid?: (errors: Record<string, unknown>) => void;
   /** Form content - can be ReactNode or render function */
   children: React.ReactNode | ((methods: UseFormReturn<TFieldValues>) => React.ReactNode);
   /** Validation mode */
@@ -276,6 +278,12 @@ export interface RHFAutocompleteBaseProps<
   loadingText?: string;
   /** Text to show when no options */
   noOptionsText?: string;
+  /**
+   * Callback when option selection changes
+   * Provides both the value and the full option object
+   * Useful for syncing related fields (e.g., copying label to another field)
+   */
+  onChangeOption?: (value: TOption['value'] | null, option: TOption | null) => void;
 }
 
 /**

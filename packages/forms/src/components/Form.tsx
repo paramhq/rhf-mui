@@ -3,6 +3,8 @@ import {
   useForm,
   FormProvider,
   FieldValues,
+  FieldErrors,
+  FieldPath,
   useFormContext,
   DefaultValues,
 } from 'react-hook-form';
@@ -40,6 +42,7 @@ export function Form<
   schema,
   defaultValues,
   onSubmit,
+  onInvalid,
   children,
   mode = 'onBlur',
   resetOnSuccess = false,
@@ -56,6 +59,7 @@ export function Form<
     resolver: zodResolver(schema as any) as Resolver<TFieldValues>,
     defaultValues: defaultValues as DefaultValues<TFieldValues>,
     mode,
+    shouldFocusError: true,
   });
 
   const handleSubmit = useCallback(
@@ -75,6 +79,22 @@ export function Form<
     [onSubmit, resetOnSuccess, methods]
   );
 
+  // Wrapper for onInvalid that handles scrolling to first error
+  const handleInvalid = useCallback(
+    (errors: FieldErrors<TFieldValues>) => {
+      // Get first error field and scroll to it
+      const errorFields = Object.keys(errors);
+      if (errorFields.length > 0) {
+        const firstField = errorFields[0] as FieldPath<TFieldValues>;
+        // Use setFocus which handles both focus and scroll
+        methods.setFocus(firstField);
+      }
+      // Call user's onInvalid callback if provided
+      onInvalid?.(errors);
+    },
+    [methods, onInvalid]
+  );
+
   const errorCount = Object.keys(methods.formState.errors).length;
 
   return (
@@ -84,7 +104,7 @@ export function Form<
           component="form"
           id={id}
           className={className}
-          onSubmit={methods.handleSubmit(handleSubmit)}
+          onSubmit={methods.handleSubmit(handleSubmit, handleInvalid)}
           noValidate
         >
           {showGlobalError && globalError && (
@@ -133,6 +153,7 @@ export function AsyncForm<
   schema,
   defaultValues,
   onSubmit,
+  onInvalid,
   children,
   mode = 'onBlur',
   resetOnSuccess = false,
@@ -151,6 +172,7 @@ export function AsyncForm<
     resolver: zodResolver(schema as any) as Resolver<TFieldValues>,
     defaultValues: defaultValues as DefaultValues<TFieldValues>,
     mode,
+    shouldFocusError: true,
   });
 
   const handleSubmit = useCallback(
@@ -171,6 +193,22 @@ export function AsyncForm<
       }
     },
     [onSubmit, resetOnSuccess, methods]
+  );
+
+  // Wrapper for onInvalid that handles scrolling to first error
+  const handleInvalid = useCallback(
+    (errors: FieldErrors<TFieldValues>) => {
+      // Get first error field and scroll to it
+      const errorFields = Object.keys(errors);
+      if (errorFields.length > 0) {
+        const firstField = errorFields[0] as FieldPath<TFieldValues>;
+        // Use setFocus which handles both focus and scroll
+        methods.setFocus(firstField);
+      }
+      // Call user's onInvalid callback if provided
+      onInvalid?.(errors);
+    },
+    [methods, onInvalid]
   );
 
   const errorCount = Object.keys(methods.formState.errors).length;
@@ -201,7 +239,7 @@ export function AsyncForm<
           component="form"
           id={id}
           className={className}
-          onSubmit={methods.handleSubmit(handleSubmit)}
+          onSubmit={methods.handleSubmit(handleSubmit, handleInvalid)}
           noValidate
           sx={{ position: 'relative' }}
         >

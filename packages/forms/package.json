@@ -1,6 +1,6 @@
 {
   "name": "@paramhq/forms",
-  "version": "3.0.0",
+  "version": "3.0.3",
   "description": "React Hook Form + MUI + Zod form components library",
   "type": "module",
   "main": "./dist/index.js",
