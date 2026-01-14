@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { useController, useFormContext, FieldValues, FieldPath } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useLocalizationContext } from '@mui/x-date-pickers/internals';
 import type { RHFDatePickerProps } from '../types';
 import { useFieldRequired } from '../context/SchemaContext';
 
@@ -66,6 +68,9 @@ export function RHFDatePicker<
   const schemaRequired = useFieldRequired(name);
   const required = requiredProp ?? schemaRequired;
 
+  // Access the date adapter from LocalizationProvider
+  const { utils } = useLocalizationContext();
+
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { error },
@@ -77,10 +82,24 @@ export function RHFDatePicker<
     shouldUnregister,
   });
 
+  // Convert string values to date objects for the picker
+  // This allows form state to store strings while picker displays correctly
+  const pickerValue = useMemo(() => {
+    if (!value) return null;
+    // If already a date object (has isValid method), use as-is
+    if (typeof value === 'object' && 'isValid' in value) return value;
+    // If string, parse using the adapter
+    if (typeof value === 'string') {
+      const parsed = utils.date(value);
+      return parsed && utils.isValid(parsed) ? parsed : null;
+    }
+    return null;
+  }, [value, utils]);
+
   return (
     <DatePicker
       label={label}
-      value={value || null}
+      value={pickerValue}
       onChange={(newValue) => {
         if (!newValue) {
           onChange(null);

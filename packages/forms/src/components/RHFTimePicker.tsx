@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { useController, useFormContext, FieldValues, FieldPath } from 'react-hook-form';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { useLocalizationContext } from '@mui/x-date-pickers/internals';
 import type { RHFTimePickerProps } from '../types';
 import { useFieldRequired } from '../context/SchemaContext';
 
@@ -60,6 +62,9 @@ export function RHFTimePicker<
   const schemaRequired = useFieldRequired(name);
   const required = requiredProp ?? schemaRequired;
 
+  // Access the date adapter from LocalizationProvider
+  const { utils } = useLocalizationContext();
+
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { error },
@@ -71,10 +76,25 @@ export function RHFTimePicker<
     shouldUnregister,
   });
 
+  // Convert string values to date objects for the picker
+  const pickerValue = useMemo(() => {
+    if (!value) return null;
+    // If already a date object (has isValid method), use as-is
+    if (typeof value === 'object' && 'isValid' in value) return value;
+    // If string (like "10:30:00"), create a full datetime string to parse
+    if (typeof value === 'string') {
+      // Prepend a date to make a valid ISO datetime
+      const fullDatetime = `1970-01-01T${value}`;
+      const parsed = utils.date(fullDatetime);
+      return parsed && utils.isValid(parsed) ? parsed : null;
+    }
+    return null;
+  }, [value, utils]);
+
   return (
     <TimePicker
       label={label}
-      value={value || null}
+      value={pickerValue}
       onChange={(newValue) => {
         if (!newValue) {
           onChange(null);
