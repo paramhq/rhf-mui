@@ -80,8 +80,26 @@ export function RHFDatePicker<
   return (
     <DatePicker
       label={label}
-      value={value ?? null}
-      onChange={(newValue) => onChange(newValue)}
+      value={value || null}
+      onChange={(newValue) => {
+        if (!newValue) {
+          onChange(null);
+          return;
+        }
+
+        // Adapter-agnostic: works with Day.js, Moment, native Date, Luxon
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const toIso = (newValue as any).toISOString ?? (newValue as any).toISO;
+
+        if (typeof toIso === 'function') {
+          const isoString: string = toIso.call(newValue);
+          // Extract date part: "2026-01-15" from "2026-01-15T00:00:00.000Z"
+          onChange(isoString.split('T')[0]);
+        } else {
+          // Fallback: pass as-is (shouldn't happen with standard adapters)
+          onChange(newValue);
+        }
+      }}
       minDate={minDate}
       maxDate={maxDate}
       format={format}

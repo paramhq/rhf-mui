@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { useController, useFormContext, FieldValues, FieldPath } from 'react-hook-form';
+import { useMemo, useRef, useEffect } from 'react';
+import { useController, useFormContext, useWatch, FieldValues, FieldPath } from 'react-hook-form';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -71,6 +71,7 @@ export function RHFAutocomplete<
   loading = false,
   loadingText = 'Loading...',
   noOptionsText = 'No options',
+  dependsOn,
 }: RHFAutocompleteProps<TFieldValues, TName, TOption>) {
   const formContext = useFormContext<TFieldValues>();
   const control = controlProp ?? formContext?.control;
@@ -88,6 +89,23 @@ export function RHFAutocomplete<
     defaultValue,
     shouldUnregister,
   });
+
+  // Cascade: clear this field when parent field changes
+  const parentValue = useWatch({ control, name: dependsOn as FieldPath<TFieldValues> });
+  const prevParentRef = useRef(parentValue);
+
+  useEffect(() => {
+    if (!dependsOn) return;
+    
+    // Only cascade when parent has a value AND changed, or parent is null
+    if (
+      (!!parentValue && prevParentRef.current !== parentValue) ||
+      parentValue === null
+    ) {
+      prevParentRef.current = parentValue;
+      onChange(null);
+    }
+  }, [dependsOn, parentValue, onChange]);
 
   // Find the selected option by value
   const selectedOption = useMemo(() => {

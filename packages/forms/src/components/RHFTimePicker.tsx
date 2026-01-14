@@ -74,8 +74,27 @@ export function RHFTimePicker<
   return (
     <TimePicker
       label={label}
-      value={value ?? null}
-      onChange={(newValue) => onChange(newValue)}
+      value={value || null}
+      onChange={(newValue) => {
+        if (!newValue) {
+          onChange(null);
+          return;
+        }
+
+        // Adapter-agnostic: works with Day.js, Moment, native Date, Luxon
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const toIso = (newValue as any).toISOString ?? (newValue as any).toISO;
+
+        if (typeof toIso === 'function') {
+          const isoString: string = toIso.call(newValue);
+          // Extract time part: "10:30:00" from "2026-01-15T10:30:00.000Z"
+          const timePart = isoString.split('T')[1]?.split('.')[0];
+          onChange(timePart ?? isoString);
+        } else {
+          // Fallback: pass as-is (shouldn't happen with standard adapters)
+          onChange(newValue);
+        }
+      }}
       ampm={ampm}
       minTime={minTime}
       maxTime={maxTime}

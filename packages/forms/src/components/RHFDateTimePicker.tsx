@@ -65,8 +65,25 @@ export function RHFDateTimePicker<
   return (
     <DateTimePicker
       label={label}
-      value={value ?? null}
-      onChange={(newValue) => onChange(newValue)}
+      value={value || null}
+      onChange={(newValue) => {
+        if (!newValue) {
+          onChange(null);
+          return;
+        }
+
+        // Adapter-agnostic: works with Day.js, Moment, native Date, Luxon
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const toIso = (newValue as any).toISOString ?? (newValue as any).toISO;
+
+        if (typeof toIso === 'function') {
+          // Full ISO string for datetime: "2026-01-15T10:30:00.000Z"
+          onChange(toIso.call(newValue));
+        } else {
+          // Fallback: pass as-is (shouldn't happen with standard adapters)
+          onChange(newValue);
+        }
+      }}
       minDateTime={minDateTime}
       maxDateTime={maxDateTime}
       ampm={ampm}

@@ -284,6 +284,11 @@ export interface RHFAutocompleteBaseProps<
    * Useful for syncing related fields (e.g., copying label to another field)
    */
   onChangeOption?: (value: TOption['value'] | null, option: TOption | null) => void;
+  /**
+   * Field name that this field depends on (for cascading dropdowns)
+   * When the parent field changes, this field will be cleared
+   */
+  dependsOn?: string;
 }
 
 /**
