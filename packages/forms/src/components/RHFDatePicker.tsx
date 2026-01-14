@@ -1,13 +1,12 @@
-import { useMemo } from 'react';
 import { useController, useFormContext, FieldValues, FieldPath } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useLocalizationContext } from '@mui/x-date-pickers/internals';
+import dayjs, { Dayjs } from 'dayjs';
 import type { RHFDatePickerProps } from '../types';
 import { useFieldRequired } from '../context/SchemaContext';
 
 /**
  * Date picker component integrated with React Hook Form
- * Requires @mui/x-date-pickers and a date adapter (dayjs, date-fns, etc.)
+ * Stores ISO date strings (YYYY-MM-DD) in form state for Zod compatibility.
  *
  * @example
  * ```tsx
@@ -15,26 +14,6 @@ import { useFieldRequired } from '../context/SchemaContext';
  *   name="birthDate"
  *   label="Date of Birth"
  *   disableFuture
- * />
- * ```
- *
- * @example With min/max dates
- * ```tsx
- * <RHFDatePicker
- *   name="appointmentDate"
- *   label="Appointment Date"
- *   minDate={new Date()}
- *   maxDate={addMonths(new Date(), 3)}
- * />
- * ```
- *
- * @example Year/Month picker
- * ```tsx
- * <RHFDatePicker
- *   name="expiryDate"
- *   label="Expiry Date"
- *   views={['year', 'month']}
- *   openTo="year"
  * />
  * ```
  */
@@ -68,9 +47,6 @@ export function RHFDatePicker<
   const schemaRequired = useFieldRequired(name);
   const required = requiredProp ?? schemaRequired;
 
-  // Access the date adapter from LocalizationProvider
-  const { utils } = useLocalizationContext();
-
   const {
     field: { value, onChange, onBlur, ref },
     fieldState: { error },
@@ -82,45 +58,38 @@ export function RHFDatePicker<
     shouldUnregister,
   });
 
-  // Convert string values to date objects for the picker
-  // This allows form state to store strings while picker displays correctly
-  const pickerValue = useMemo(() => {
-    if (!value) return null;
-    // If already a date object (has isValid method), use as-is
-    if (typeof value === 'object' && 'isValid' in value) return value;
-    // If string, parse using the adapter
+  // Convert form value (string | null | undefined | Dayjs) to Dayjs for MUI
+  // This runs on every render - no state needed
+  const toPickerValue = (): Dayjs | null => {
+    if (value === null || value === undefined || value === '') {
+      return null;
+    }
+    if (dayjs.isDayjs(value)) {
+      return value;
+    }
     if (typeof value === 'string') {
-      const parsed = utils.date(value);
-      return parsed && utils.isValid(parsed) ? parsed : null;
+      const parsed = dayjs(value);
+      return parsed.isValid() ? parsed : null;
     }
     return null;
-  }, [value, utils]);
+  };
+
+  // Convert Dayjs to string for form state (Zod validation)
+  const handleChange = (newValue: Dayjs | null): void => {
+    if (newValue === null || !newValue.isValid()) {
+      onChange(null);
+    } else {
+      onChange(newValue.format('YYYY-MM-DD'));
+    }
+  };
 
   return (
     <DatePicker
       label={label}
-      value={pickerValue}
-      onChange={(newValue) => {
-        if (!newValue) {
-          onChange(null);
-          return;
-        }
-
-        // Adapter-agnostic: works with Day.js, Moment, native Date, Luxon
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const toIso = (newValue as any).toISOString ?? (newValue as any).toISO;
-
-        if (typeof toIso === 'function') {
-          const isoString: string = toIso.call(newValue);
-          // Extract date part: "2026-01-15" from "2026-01-15T00:00:00.000Z"
-          onChange(isoString.split('T')[0]);
-        } else {
-          // Fallback: pass as-is (shouldn't happen with standard adapters)
-          onChange(newValue);
-        }
-      }}
-      minDate={minDate}
-      maxDate={maxDate}
+      value={toPickerValue()}
+      onChange={handleChange}
+      minDate={minDate as Dayjs | undefined}
+      maxDate={maxDate as Dayjs | undefined}
       format={format}
       disableFuture={disableFuture}
       disablePast={disablePast}
